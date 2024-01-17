@@ -14,9 +14,6 @@ interface Props {
 export default function SidebarMenuItem({ path, icon, title, subtitle }: Props) {
 
     const pathname = usePathname();
-    console.log('path: ', path, ' pathname: ', pathname)
-
-    console.log(path === pathname);
     return (
         <Link href={path} className={`w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 ${path === pathname && 'bg-blue-800'} hover:bg-white/5 transition ease-linear duration-150`}>
             <div>
