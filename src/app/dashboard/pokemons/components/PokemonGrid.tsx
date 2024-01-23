@@ -1,5 +1,6 @@
-import { PokemonCard, SimplePokemon } from "@/app/dashboard/pokemons";
+import { PokemonCard, SimplePokemon } from "@/pokemons";
 import Image from "next/image";
+
 
 
 interface Props {
