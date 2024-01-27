@@ -26,12 +26,18 @@ export const PokemonCard = ({ pokemon }: Props) => {
                     {/* <svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg> */}
                     <p className="pt-2 text-lg font-semibold text-gray-50 capitalize">{name}</p>
                     {/* <p className="text-sm text-gray-100">John@Doe.com</p> */}
-                    <div className="mt-5">
+                    <div className="mt-5 flex  flex-col items-center">
                         <Link
                             href={`pokemon/${id}`}
                             className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100"
                         >
                             Más Información
+                        </Link>
+                        <Link
+                            href={`pokemons/${name}`}
+                            className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100"
+                        >
+                            Request By Name
                         </Link>
                     </div>
                 </div>

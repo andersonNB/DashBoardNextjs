@@ -1,28 +1,31 @@
-import { Metadata, ResolvingMetadata } from 'next'
-import { Pokemon } from "@/pokemons";
+import { Metadata } from 'next'
+import { Pokemon, PokemonsResponse } from "@/pokemons";
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 interface Props {
-    params: { id: string }
+    params: { name: string }
 }
 
 // Esto solo se ejecuta en build time
 export async function generateStaticParams() {
 
-    const static151Pokemons = Array.from({ length: 151 }, (v, i) => `${i + 1}`);
+    const data: PokemonsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+        .then(res => res.json())
 
-    return static151Pokemons.map(id => ({
-        id: id,
+    const static151Pokemons = data.results.map(pokemon => pokemon.name);
+
+    return static151Pokemons.map(name => ({
+        name: name,
     }));
 }
 
-const getPokemon = async (id: string): Promise<Pokemon> => {
+const getPokemon = async (name: string): Promise<Pokemon> => {
 
     try {
 
         //con el next: { revalidate: 60 * 60 * 24 * 7, } le decimos que se actualice cada 7 dias
-        const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+        const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, {
             // cache: 'force-cache',Comentamos este ya que el next: { revalidate: 60 * 60 * 24 * 7, } hace lo de force-cache
             next: {
                 revalidate: 60 * 60 * 24 * 7,
@@ -30,7 +33,7 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
         }).then(res => res.json());
 
 
-        console.log(pokemon)
+        console.log('[name]: ', pokemon)
 
         return pokemon
 
@@ -43,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     try {
 
-        const { id, name } = await getPokemon(params.id);
+        const { id, name } = await getPokemon(params.name);
         return {
             title: `#${id} - ${name}`,
             description: `Página del pokemon ${name}`,
@@ -52,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     } catch (error) {
         return {
             title: `Error`,
-            description: `Página del pokemon ${params.id}`,
+            description: `Página del pokemon ${params.name}`,
         }
     }
 
@@ -60,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PokemonPage({ params }: Props) {
 
-    const pokemon = await getPokemon(params.id);
+    const pokemon = await getPokemon(params.name);
 
 
     return (
