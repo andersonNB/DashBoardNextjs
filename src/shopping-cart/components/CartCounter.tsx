@@ -1,7 +1,7 @@
 'use client'
-import React, { useState } from 'react'
-
-
+import React, { useState, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '@/store';
+import { addOne, initCounterState, substractOne } from '@/store/counter/counterSlice';
 
 interface Props {
     value?: number;
@@ -9,19 +9,24 @@ interface Props {
 
 export const CartCounter = ({ value = 10 }: Props) => {
 
-    const [counter, setValue] = useState(value)
 
-    const handleAdd = () => {
-        setValue(counter + 1)
-    }
+    const count = useAppSelector(state => state.counterReducer.count);
+    const dispatch = useAppDispatch();
 
-    const handleDecrease = () => {
-        setValue(counter - 1)
-    }
+
+    useEffect(() => {
+        dispatch(initCounterState(value));
+    }, [dispatch, value])
+
+
+
+    const handleAdd = () => dispatch(addOne())
+
+    const handleDecrease = () => dispatch(substractOne())
 
     return (
         <>
-            <span className="text-9xl">{counter}</span>
+            <span className="text-9xl">{count}</span>
             <div className="flex">
                 <button
                     onClick={handleAdd}
