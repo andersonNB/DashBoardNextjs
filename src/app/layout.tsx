@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <h5>Esto es el layout principal</h5>
         <Providers>
           {children}
         </Providers>
