@@ -1,7 +1,7 @@
+'use client'
 import Link from "next/link"
 import { SimplePokemon } from "@/app/dashboard/pokemons";
 import Image from "next/image";
-import { IoHeartOutline } from "react-icons/io5";
 
 interface Props {
     pokemon: SimplePokemon
@@ -10,11 +10,11 @@ interface Props {
 export const PokemonCard = ({ pokemon }: Props) => {
 
     const { id, name } = pokemon;
-
     return (
         <div className="mx-auto right-0 mt-2 w-60">
             <div className="bg-white rounded overflow-hidden shadow-lg">
                 <div className=" flex flex-col justify-center items-center text-center p-6 bg-gray-800 border-b">
+                    render
                     <Image
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
                         width={100}
@@ -39,13 +39,14 @@ export const PokemonCard = ({ pokemon }: Props) => {
                     <Link href="/dashboard/main" className="px-4 py-2 hover:bg-gray-100 flex items-center">
 
                         <div className="text-red-600">
-                            <IoHeartOutline />
+                            icon
+
                         </div>
                         <div className="pl-3">
                             <p className="text-sm font-medium text-gray-800 leading-none">
-                                No es favorito
+                                no favorite
                             </p>
-                            <p className="text-xs text-gray-500">View your campaigns</p>
+                            <p className="text-xs text-gray-500">Click para cambiar</p>
                         </div>
                     </Link>
                 </div>
